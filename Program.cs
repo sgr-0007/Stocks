@@ -1,7 +1,6 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using dotNET8;
 using dotNET8.Data;
 using dotNET8.Interfaces;
@@ -11,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // ------------- Services --------------------------------------------------
 builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
 
 builder.Services.AddDbContext<ApplicationDBContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -38,6 +41,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();                  // keeps minimal-API discovery on
 
 builder.Services.AddScoped<IStockRepository, StockRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+
 
 var app = builder.Build();
 

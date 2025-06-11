@@ -1,4 +1,6 @@
 
+using dotNET8.Dtos.Comment;
+
 namespace dotNET8.Dtos.Stock
 {
     public class StockDto
@@ -13,6 +15,8 @@ namespace dotNET8.Dtos.Stock
         public string Industry { get; set; } = string.Empty;
 
         public long MarketCap { get; set; }
+
+        public List<CommentDto> Comments {get; set; } = [];
 
 
     }
