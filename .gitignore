@@ -1,0 +1,73 @@
+#################################
+# .NET & ASP.NET
+#################################
+bin/
+obj/
+out/
+packages/
+project.lock.json
+project.fragment.lock.json
+*.pidb
+*.svclog
+*.user
+*.suo
+*.sdf
+*.cache
+*.dbmdl
+*.dbproj.schemaview
+*.pdb
+
+#################################
+# Build Logs
+#################################
+*.log
+
+#################################
+# Visual Studio Code
+#################################
+.vscode/
+.history/
+
+#################################
+# Rider & JetBrains
+#################################
+.idea/
+
+#################################
+# ASP.NET Secrets & User Config
+#################################
+secrets.json
+*.launchSettings.json
+.env
+.env.*
+
+#################################
+# Test Results
+#################################
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+*.trx
+
+#################################
+# Docker
+#################################
+docker-compose.override.yml
+*.tar
+
+#################################
+# OS Generated
+#################################
+.DS_Store
+Thumbs.db
+
+#################################
+# Others
+#################################
+node_modules/
+wwwroot/dist/
+publish/
+Generated_Code/
+*.g.cs
+*.g.i.cs
