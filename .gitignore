@@ -71,3 +71,4 @@ publish/
 Generated_Code/
 *.g.cs
 *.g.i.cs
+.fake

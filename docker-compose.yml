@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  stocksapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: stocksapi:latest
+    ports:
+      - "5050:80"
+    networks:
+      - appnet
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80       # <-- THIS IS CRITICAL!
+      - ConnectionStrings__DefaultConnection=Server=sql2022,1433;Database=${DB_NAME};User Id=sa;Password=${SA_PASSWORD};Encrypt=True;TrustServerCertificate=True;
+
+networks:
+  appnet:
+    external: true
