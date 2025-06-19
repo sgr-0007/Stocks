@@ -47,7 +47,8 @@ builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 var app = builder.Build();
 
 // ------------- Pipeline --------------------------------------------------
-if (app.Environment.IsDevelopment())
+// Enable Swagger in both Development and Production
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
