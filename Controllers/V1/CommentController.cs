@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Asp.Versioning;
@@ -13,11 +14,13 @@ namespace dotNET8.Controllers.V1
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/comment")]
     [ApiController]
-    public class CommentController(ICommentRepository commentRepo) : ControllerBase
+    public class CommentController(ICommentRepository commentRepo, IStockRepository stockRepo) : ControllerBase
     {
         private readonly ICommentRepository _commentRepo = commentRepo;
+        private readonly IStockRepository _stockRepo = stockRepo;
 
-       [HttpGet]
+
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var comments = await _commentRepo.GetAllAsync();
@@ -31,6 +34,35 @@ namespace dotNET8.Controllers.V1
         {
             var comment = await _commentRepo.GetByIdAsync(id);
             return comment is null ? NotFound() : Ok(comment.ToCommentDto());
+        }
+        [HttpPost("{stockId}")]
+        public async Task<IActionResult> Create([FromRoute] int stockId, [FromBody] CreateCommentRequestDto commentDto)
+        {
+            var stockExists = await _stockRepo.StockExists(stockId);
+            if (!stockExists)
+            {
+                return BadRequest("Stock does not exist");
+            }
+            var commentModel = commentDto.ToComment(stockId);
+            await _commentRepo.CreateAsync(commentModel);
+            return CreatedAtAction("GetById", new { id = commentModel.Id }, commentModel.ToCommentDto());
+
+        }
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentRequestDto commentDto)
+        {
+            var commentModel = await _commentRepo.UpdateAsync(id, commentDto);
+            return Ok(commentModel?.ToCommentDto());
+
+        }
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            await _commentRepo.DeleteAsync(id);
+            return NoContent();
+
         }
 
     }

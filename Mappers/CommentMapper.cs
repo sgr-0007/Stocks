@@ -23,5 +23,21 @@ namespace dotNET8.Mappers
 
             };
         }
+        public static Comment ToComment(this CreateCommentRequestDto commentDto, int stockId)
+        {
+
+            return new Comment
+            {
+                Title = commentDto.Title,
+                Content = commentDto.Content,
+                StockId = stockId
+
+            };
+        }
+        public static void MapCommentDtoToComment(this UpdateCommentRequestDto src, Comment dest)
+        {
+            dest.Title = src.Title;
+            dest.Content = src.Content;
+        }
     }
 }
