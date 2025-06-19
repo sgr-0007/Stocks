@@ -66,4 +66,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+app.MapGet("/", () => "Stocks API is alive!");
+
 app.Run();
