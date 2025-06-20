@@ -1,8 +1,10 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNET8", "dotNET8.csproj", "{B4285CD7-03DA-4FC9-1D7D-C76FBA3B0083}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNET8.Tests", "..\dotNET8.Tests\dotNET8.Tests.csproj", "{FFB3824F-1176-4602-BE71-D3556A78D4FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,6 +16,10 @@ Global
 		{B4285CD7-03DA-4FC9-1D7D-C76FBA3B0083}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4285CD7-03DA-4FC9-1D7D-C76FBA3B0083}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4285CD7-03DA-4FC9-1D7D-C76FBA3B0083}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFB3824F-1176-4602-BE71-D3556A78D4FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFB3824F-1176-4602-BE71-D3556A78D4FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFB3824F-1176-4602-BE71-D3556A78D4FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFB3824F-1176-4602-BE71-D3556A78D4FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
