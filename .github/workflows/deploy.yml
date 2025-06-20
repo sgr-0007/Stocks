@@ -70,7 +70,7 @@ jobs:
       if: github.event_name != 'pull_request'
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'stocks-api-webapp'  # Replace with your actual app name
+        app-name: 'stocks-api-webapp' 
         images: '${{ secrets.REGISTRY_LOGIN_SERVER }}/stocks-api:${{ github.sha }}'
         
     - name: Azure logout
