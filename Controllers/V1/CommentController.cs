@@ -23,6 +23,9 @@ namespace dotNET8.Controllers.V1
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var comments = await _commentRepo.GetAllAsync();
             var commentDto = comments.Select(x => x.ToCommentDto());
             return Ok(commentDto);
@@ -32,12 +35,18 @@ namespace dotNET8.Controllers.V1
         [Route("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var comment = await _commentRepo.GetByIdAsync(id);
             return comment is null ? NotFound() : Ok(comment.ToCommentDto());
         }
         [HttpPost("{stockId:int}")]
         public async Task<IActionResult> Create([FromRoute] int stockId, [FromBody] CreateCommentRequestDto commentDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var stockExists = await _stockRepo.StockExists(stockId);
             if (!stockExists)
             {
@@ -52,6 +61,9 @@ namespace dotNET8.Controllers.V1
         [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentRequestDto commentDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var commentModel = await _commentRepo.UpdateAsync(id, commentDto);
             return Ok(commentModel?.ToCommentDto());
 
@@ -60,6 +72,9 @@ namespace dotNET8.Controllers.V1
         [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+                
             await _commentRepo.DeleteAsync(id);
             return NoContent();
 
