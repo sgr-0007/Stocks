@@ -24,7 +24,7 @@ namespace dotNET8.Controllers.V1
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var stock = await _stockRepo.GetByIdAsync(id);
@@ -43,7 +43,7 @@ namespace dotNET8.Controllers.V1
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateStockRequestDto UpdateDto)
         {
             var StockModel = await _stockRepo.UpdateAsync(id, UpdateDto);
@@ -53,7 +53,7 @@ namespace dotNET8.Controllers.V1
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             await _stockRepo.DeleteAsync(id);
