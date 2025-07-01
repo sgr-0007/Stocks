@@ -1,6 +1,7 @@
 using Asp.Versioning;
 using dotNET8.Data;
 using dotNET8.Dtos.Stock;
+using dotNET8.Helpers;
 using dotNET8.Interfaces;
 using dotNET8.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,9 @@ namespace dotNET8.Controllers.V1
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
-            var Stocks = await _stockRepo.GetAllAsync();
+            var Stocks = await _stockRepo.GetAllAsync(query);
             var StocksDto = Stocks.Select(s => s.ToStockDto());
             return Ok(StocksDto);
         }

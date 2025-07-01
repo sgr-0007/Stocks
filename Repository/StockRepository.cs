@@ -1,5 +1,6 @@
 using dotNET8.Data;
 using dotNET8.Dtos.Stock;
+using dotNET8.Helpers;
 using dotNET8.Interfaces;
 using dotNET8.Mappers;
 using dotNET8.Models;
@@ -26,17 +27,29 @@ namespace dotNET8.Repository
             await _context.SaveChangesAsync();
             return stockModel;
 
-        
+
         }
 
-        public async Task<List<Stock>> GetAllAsync()
+        public async Task<List<Stock>> GetAllAsync(QueryObject query)
         {
-            return await _context.Stocks.Include(x=>x.Comments).ToListAsync();
+            var stocks = _context.Stocks.Include(x => x.Comments).AsQueryable();
+
+            if (query.CompanyName is { Length: > 0 })
+            {
+                stocks = stocks.Where(x => x.CompanyName.Contains(query.CompanyName));
+            }
+
+            if (query.Symbol is { Length: > 0 })
+            {
+                stocks = stocks.Where(x => x.Symbol.Contains(query.Symbol));
+            }
+
+            return await stocks.ToListAsync();
         }
 
         public async Task<Stock?> GetByIdAsync(int id)
         {
-            return await _context.Stocks.Include(x=>x.Comments).FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Stocks.Include(x => x.Comments).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<bool> StockExists(int id)
