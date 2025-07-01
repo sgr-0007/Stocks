@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace dotNET8.Controllers.V1
 {
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/stock")]
+    [Route("api/v{version:apiVersion}/stocks")]
     [ApiController]
     public class StockController(IStockRepository stockRepo) : ControllerBase
     {

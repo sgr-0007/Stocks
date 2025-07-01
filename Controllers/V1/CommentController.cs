@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace dotNET8.Controllers.V1
 {
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/comment")]
+    [Route("api/v{version:apiVersion}/comments")]
     [ApiController]
     public class CommentController(ICommentRepository commentRepo, IStockRepository stockRepo) : ControllerBase
     {
