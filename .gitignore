@@ -40,6 +40,8 @@ secrets.json
 *.launchSettings.json
 .env
 .env.*
+appsettings.json
+appsettings.Development.json
 
 
 #################################
