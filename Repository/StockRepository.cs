@@ -49,6 +49,10 @@ namespace dotNET8.Repository
                 {
                     stocks = query.IsDescending ? stocks.OrderByDescending(x => x.Symbol) : stocks.OrderBy(x => x.Symbol);
                 }
+                if (query.Sortby.Equals("CompanyName", StringComparison.OrdinalIgnoreCase))
+                {
+                    stocks = query.IsDescending ? stocks.OrderByDescending(x => x.CompanyName) : stocks.OrderBy(x => x.CompanyName);
+                }
             }
             var skipNumber = (query.PageNumber - 1) * query.PageSize;
 
