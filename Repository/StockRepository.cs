@@ -43,6 +43,13 @@ namespace dotNET8.Repository
             {
                 stocks = stocks.Where(x => x.Symbol.Contains(query.Symbol));
             }
+            if (query.Sortby is { Length: > 0 })
+            {
+                if (query.Sortby.Equals("Symbol", StringComparison.OrdinalIgnoreCase))
+                {
+                    stocks = query.IsDescending ? stocks.OrderByDescending(x => x.Symbol) : stocks.OrderBy(x => x.Symbol);
+                }
+            }
 
             return await stocks.ToListAsync();
         }
