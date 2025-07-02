@@ -19,6 +19,19 @@ This application follows a cloud-native architecture using Azure services:
 - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 - [GitHub Account](https://github.com/)
 
+
+## Configuration Setup
+
+1. For local development, add your connection string to `appsettings.json` or use User Secrets:
+
+```json
+{
+  "ConnectionStrings": {
+      "DefaultConnection": "Server=yourserveraddr;Initial Catalog=yourDb;Persist Security Info=False;User ID=youruserid;Password=pass$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  }
+}
+```
+
 ## Local Development
 
 ### Running with Docker Compose
