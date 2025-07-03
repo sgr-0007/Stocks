@@ -3,7 +3,7 @@ version: '3.8'
 services:
   stocksapi:
     build:
-      context: .
+      context: ./Core/Stocks.API
       dockerfile: Dockerfile
     image: stocksapi:latest
     ports:
