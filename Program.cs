@@ -26,8 +26,7 @@ builder.Services
         opt.ReportApiVersions = true;
         opt.ApiVersionReader = ApiVersionReader.Combine(
             new UrlSegmentApiVersionReader(),                  // /v{version}/...
-            new HeaderApiVersionReader("X-Api-Version"),
-            new QueryStringApiVersionReader("api-version"));
+            new HeaderApiVersionReader("X-Api-Version"));
     })
     .AddApiExplorer(opt =>
     {
