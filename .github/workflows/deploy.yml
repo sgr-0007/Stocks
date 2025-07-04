@@ -30,9 +30,7 @@ jobs:
       
     - name: Test
       run: |
-        echo "No tests available - continuing with deployment"
-        # The following line is commented out until tests are added
-        # dotnet test --no-build --configuration Release
+        dotnet test Test/Test.csproj --configuration Release
       
     - name: Update Database
       if: github.event_name != 'pull_request'
