@@ -1,6 +1,6 @@
 # Stocks API
 
-A containerized .NET 8 Web API for managing stocks and comments, deployed to Azure using Docker and GitHub Actions.
+A containerized .NET 8 Web API for managing stocks and comments, deployed to Azure using Docker and GitHub Actions. Includes comprehensive unit testing with mock repositories.
 
 ## Architecture
 
@@ -11,6 +11,7 @@ This application follows a cloud-native architecture using Azure services:
 - **Containerization**: Docker multi-stage build process
 - **CI/CD**: GitHub Actions workflow for automated deployment
 - **Cloud Hosting**: Azure Web App for Containers
+- **Testing**: xUnit with mock repositories for isolated unit testing
 
 ## Prerequisites
 
@@ -100,6 +101,37 @@ The GitHub Actions workflow in `.github/workflows/deploy.yml` performs:
 2. Run database migrations
 3. Build and push Docker image to ACR
 4. Deploy to Azure Web App for Containers
+
+## Testing
+
+This project uses a comprehensive testing approach with xUnit and FluentAssertions:
+
+### Repository Tests
+
+Repository tests use mock implementations instead of EF Core InMemory database to avoid issues with required properties and provide better isolation:
+
+- **MockStockRepository**: In-memory implementation of IStockRepository
+- **MockCommentRepository**: In-memory implementation of ICommentRepository
+
+### Controller Tests
+
+Controller tests use mock repositories to test API endpoints in isolation.
+
+### Running Tests
+
+```bash
+# Run all tests
+dotnet test
+
+# Run tests with detailed output
+dotnet test --logger "console;verbosity=detailed"
+```
+
+### Test Structure
+
+- **Test/Repository/**: Tests for data repositories
+- **Test/Controllers/**: Tests for API controllers
+- **Test/Mocks/**: Mock implementations for testing
 
 ## Project Structure
 
