@@ -102,7 +102,7 @@ namespace Test.Controllers.V1
             // Arrange
             int stockId = 999;
             _mockStockRepo.Setup(repo => repo.GetByIdAsync(stockId))
-                .ReturnsAsync((Stock)null);
+                .ReturnsAsync((Stock?)null);
 
             // Act
             var result = await _controller.GetById(stockId);
@@ -208,7 +208,7 @@ namespace Test.Controllers.V1
             };
 
             _mockStockRepo.Setup(repo => repo.UpdateAsync(stockId, updateDto))
-                .ReturnsAsync((Stock)null);
+                .ReturnsAsync((Stock?)null);
 
             // Act
             var result = await _controller.Update(stockId, updateDto);

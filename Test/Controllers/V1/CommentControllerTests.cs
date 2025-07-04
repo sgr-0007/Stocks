@@ -104,7 +104,7 @@ namespace Test.Controllers.V1
             // Arrange
             int commentId = 999;
             _mockCommentRepo.Setup(repo => repo.GetByIdAsync(commentId))
-                .ReturnsAsync((Comment)null);
+                .ReturnsAsync((Comment?)null);
 
             // Act
             var result = await _controller.GetById(commentId);
@@ -255,7 +255,7 @@ namespace Test.Controllers.V1
             };
 
             _mockCommentRepo.Setup(repo => repo.UpdateAsync(commentId, updateDto))
-                .ReturnsAsync((Comment)null);
+                .ReturnsAsync((Comment?)null);
 
             // Act
             var result = await _controller.Update(commentId, updateDto);
