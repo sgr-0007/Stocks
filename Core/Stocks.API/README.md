@@ -19,6 +19,7 @@ This application follows a cloud-native architecture using Azure services:
 - [Docker](https://www.docker.com/products/docker-desktop)
 - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 - [GitHub Account](https://github.com/)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/) (recommended)
 
 
 ## Configuration Setup
@@ -70,9 +71,27 @@ dotnet ef database update
 
 ## API Documentation
 
-Swagger UI is available
+Swagger UI is available:
 
 - Development: https://localhost:5050/swagger
+
+### API Endpoints
+
+#### Stocks API
+
+- `GET /api/v1/stock` - Get all stocks with optional filtering, sorting, and pagination
+- `GET /api/v1/stock/{id}` - Get stock by ID
+- `POST /api/v1/stock` - Create a new stock
+- `PUT /api/v1/stock/{id}` - Update an existing stock
+- `DELETE /api/v1/stock/{id}` - Delete a stock
+
+#### Comments API
+
+- `GET /api/v1/comment` - Get all comments
+- `GET /api/v1/comment/{id}` - Get comment by ID
+- `POST /api/v1/comment` - Create a new comment
+- `PUT /api/v1/comment/{id}` - Update an existing comment
+- `DELETE /api/v1/comment/{id}` - Delete a comment
 
 ## Azure Deployment
 
@@ -104,14 +123,20 @@ The GitHub Actions workflow in `.github/workflows/deploy.yml` performs:
 
 ## Testing
 
-This project uses a comprehensive testing approach with xUnit and FluentAssertions:
+This project uses a comprehensive testing approach with xUnit and FluentAssertions. All tests are integrated into the CI/CD pipeline to ensure code quality:
 
 ### Repository Tests
 
 Repository tests use mock implementations instead of EF Core InMemory database to avoid issues with required properties and provide better isolation:
 
 - **MockStockRepository**: In-memory implementation of IStockRepository
+  - Simulates operations for stocks
+  - Supports filtering, sorting, and pagination
+  - Maintains consistent test data across test runs
+
 - **MockCommentRepository**: In-memory implementation of ICommentRepository
+  - Simulates operations for comments
+  - Maintains referential integrity with stocks
 
 ### Controller Tests
 
@@ -130,10 +155,44 @@ dotnet test --logger "console;verbosity=detailed"
 ### Test Structure
 
 - **Test/Repository/**: Tests for data repositories
+  - StockRepositoryTests.cs: Tests for stock operations, filtering, sorting, and pagination
+  - CommentRepositoryTests.cs: Tests for comment operations
 - **Test/Controllers/**: Tests for API controllers
+  - StockControllerTests.cs: Tests for stock API endpoints
+  - CommentControllerTests.cs: Tests for comment API endpoints
 - **Test/Mocks/**: Mock implementations for testing
+  - MockStockRepository.cs: In-memory implementation of IStockRepository
+  - MockCommentRepository.cs: In-memory implementation of ICommentRepository
 
 ## Project Structure
+
+```
+Stocks.API/
+├── Controllers/         # API controllers
+│   ├── V1/             # Version 1 API endpoints
+│   │   ├── CommentController.cs
+│   │   └── StockController.cs
+├── Data/               # Data access layer
+│   ├── ApplicationDBContext.cs
+│   └── Migrations/     # EF Core migrations
+├── Dtos/               # Data Transfer Objects
+│   ├── Comment/        # Comment DTOs
+│   └── Stock/          # Stock DTOs
+├── Helpers/            # Helper classes
+│   └── QueryObject.cs  # Query parameters for filtering/sorting
+├── Interfaces/         # Repository interfaces
+│   ├── ICommentRepository.cs
+│   └── IStockRepository.cs
+├── Mappers/            # Object mappers
+│   ├── CommentMappers.cs
+│   └── StockMappers.cs
+├── Models/             # Domain models
+│   ├── Comment.cs
+│   └── Stock.cs
+└── Repository/         # Repository implementations
+    ├── CommentRepository.cs
+    └── StockRepository.cs
+```
 
 - `/Controllers`: API endpoints for stocks and comments
 - `/Models`: Entity models for database
@@ -142,6 +201,7 @@ dotnet test --logger "console;verbosity=detailed"
 - `/Interfaces`: Service interfaces
 - `/Dtos`: Data transfer objects
 - `/Mappers`: Object mapping extensions
+- `/Helpers`: Helper classes
 
 ## Contributing
 
