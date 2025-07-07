@@ -79,19 +79,19 @@ Swagger UI is available:
 
 #### Stocks API
 
-- `GET /api/v1/stock` - Get all stocks with optional filtering, sorting, and pagination
-- `GET /api/v1/stock/{id}` - Get stock by ID
-- `POST /api/v1/stock` - Create a new stock
-- `PUT /api/v1/stock/{id}` - Update an existing stock
-- `DELETE /api/v1/stock/{id}` - Delete a stock
+- `GET /api/v1/stocks` - Get all stocks with optional filtering, sorting, and pagination
+- `GET /api/v1/stocks/{id}` - Get stock by ID
+- `POST /api/v1/stocks` - Create a new stock
+- `PUT /api/v1/stocks/{id}` - Update an existing stock
+- `DELETE /api/v1/stocks/{id}` - Delete a stock
 
 #### Comments API
 
-- `GET /api/v1/comment` - Get all comments
-- `GET /api/v1/comment/{id}` - Get comment by ID
-- `POST /api/v1/comment` - Create a new comment
-- `PUT /api/v1/comment/{id}` - Update an existing comment
-- `DELETE /api/v1/comment/{id}` - Delete a comment
+- `GET /api/v1/comments` - Get all comments
+- `GET /api/v1/comments/{id}` - Get comment by ID
+- `POST /api/v1/comments` - Create a new comment
+- `PUT /api/v1/comments/{id}` - Update an existing comment
+- `DELETE /api/v1/comments/{id}` - Delete a comment
 
 ## Azure Deployment
 
@@ -103,7 +103,7 @@ The application is deployed to Azure using GitHub Actions:
    - Web App for Containers: `stocks-api-webapp`
    - Azure Container Registry: `stocksapiregistry`
    - Azure SQL Server: `stocksapi-sql`
-   - Azure SQL Database: `StocksDb`
+   - Azure SQL Database: `Stocks`
 
 2. **GitHub Secrets**:
    - `AZURE_CREDENTIALS`: Service principal credentials for Azure
