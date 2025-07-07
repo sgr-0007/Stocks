@@ -1,9 +1,10 @@
+using System.Text.Unicode;
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Stocks.API;
 using Stocks.API.Data;
 using Stocks.API.Interfaces;
@@ -22,6 +23,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
     options.Password.RequireDigit = true;
@@ -32,20 +34,43 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 })
 .AddEntityFrameworkStores<ApplicationDBContext>();
 
-builder.Services
-    .AddApiVersioning(opt =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme =
+    options.DefaultChallengeScheme =
+    options.DefaultForbidScheme =
+    options.DefaultScheme =
+    options.DefaultSignInScheme =
+    options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
+
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        opt.DefaultApiVersion = new ApiVersion(1, 0);
-        opt.AssumeDefaultVersionWhenUnspecified = true;
-        opt.ReportApiVersions = true;
-        opt.ApiVersionReader = ApiVersionReader.Combine(
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["JWT:Issuer"],
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration["JWT:Audience"],
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"]))
+    };
+});
+
+builder.Services
+    .AddApiVersioning(options =>
+    {
+        options.DefaultApiVersion = new ApiVersion(1, 0);
+        options.AssumeDefaultVersionWhenUnspecified = true;
+        options.ReportApiVersions = true;
+        options.ApiVersionReader = ApiVersionReader.Combine(
             new UrlSegmentApiVersionReader(),                  // /v{version}/...
             new HeaderApiVersionReader("X-Api-Version"));
     })
-    .AddApiExplorer(opt =>
+    .AddApiExplorer(options =>
     {
-        opt.GroupNameFormat = "'v'VVV";                       // v1, v1.1, v2
-        opt.SubstituteApiVersionInUrl = true;
+        options.GroupNameFormat = "'v'VVV";                       // v1, v1.1, v2
+        options.SubstituteApiVersionInUrl = true;
     });
 
 // Configure Swagger to work with API versioning
@@ -77,6 +102,9 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
