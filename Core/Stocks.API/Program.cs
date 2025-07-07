@@ -1,9 +1,13 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Stocks.API;
 using Stocks.API.Data;
 using Stocks.API.Interfaces;
+using Stocks.API.Models;
 using Stocks.API.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,8 +19,18 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
 
-builder.Services.AddDbContext<ApplicationDBContext>(opt =>
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ApplicationDBContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength = 12;
+})
+.AddEntityFrameworkStores<ApplicationDBContext>();
 
 builder.Services
     .AddApiVersioning(opt =>
