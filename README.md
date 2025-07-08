@@ -32,7 +32,6 @@ This project is a cloud-native application designed to manage stock information 
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 - [Docker](https://www.docker.com/products/docker-desktop)
-- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) (for deployment)
 
 ### Local Development
 
