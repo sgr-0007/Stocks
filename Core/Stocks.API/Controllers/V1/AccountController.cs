@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -10,13 +11,14 @@ using Stocks.API.Models;
 
 namespace Stocks.API.Controllers.V1
 {
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/accounts")]
     [ApiController]
-    [Route("api/accounts")]
     public class AccountController(UserManager<AppUser> userManager) : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager = userManager;
 
-        [HttpPost("resgiter")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             try
