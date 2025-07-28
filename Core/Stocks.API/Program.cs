@@ -10,6 +10,7 @@ using Stocks.API.Data;
 using Stocks.API.Interfaces;
 using Stocks.API.Models;
 using Stocks.API.Repository;
+using Stocks.API.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -80,6 +81,7 @@ builder.Services.AddEndpointsApiExplorer();                  // keeps minimal-AP
 
 builder.Services.AddScoped<IStockRepository, StockRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 
 var app = builder.Build();
