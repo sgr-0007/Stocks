@@ -21,6 +21,56 @@ This application follows a cloud-native architecture using Azure services:
 - [GitHub Account](https://github.com/)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/) (recommended)
 
+## Authentication and Authorization
+
+This application uses JWT (JSON Web Token) for authentication and authorization. Users must authenticate to access protected endpoints.
+
+### JWT Authentication Setup
+
+1. **Add JWT Configuration**:
+   Update `appsettings.json` with the JWT settings:
+   ```json
+   {
+     "JWT": {
+       "Issuer": "StocksAPI",
+       "Audience": "StocksAPIUsers",
+       "SigningKey": "YourSuperSecureSigningKey1234567890"
+     }
+   }
+   ```
+
+2. **Token Generation**:
+   The `TokenService` is responsible for generating JWT tokens. It uses the `Issuer`, `Audience`, and `SigningKey` from the configuration. Example:
+   ```csharp
+   public string GenerateToken(IEnumerable<Claim> claims)
+   {
+       var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:SigningKey"]));
+       var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+       var token = new JwtSecurityToken(
+           issuer: _configuration["JWT:Issuer"],
+           audience: _configuration["JWT:Audience"],
+           claims: claims,
+           expires: DateTime.UtcNow.AddDays(7),
+           signingCredentials: creds
+       );
+
+       return new JwtSecurityTokenHandler().WriteToken(token);
+   }
+   ```
+
+3. **Authorization**:
+   Include the JWT token in the `Authorization` header for protected endpoints:
+   ```http
+   Authorization: Bearer your_jwt_token
+   ```
+
+### Testing Authentication
+
+Use tools like Postman or curl to test endpoints with JWT tokens:
+```bash
+curl -X GET https://localhost:5001/api/v1/stocks -H "Authorization: Bearer your_jwt_token"
+```
 
 ## Configuration Setup
 
