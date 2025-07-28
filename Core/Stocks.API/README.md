@@ -143,6 +143,10 @@ Swagger UI is available:
 - `PUT /api/v1/comments/{id}` - Update an existing comment
 - `DELETE /api/v1/comments/{id}` - Delete a comment
 
+#### Account API
+
+- `POST /api/v1/account/register` - Register a new user
+- `POST /api/v1/account/login` - Authenticate a user and return a JWT token
 ## Azure Deployment
 
 The application is deployed to Azure using GitHub Actions:
@@ -220,38 +224,48 @@ dotnet test --logger "console;verbosity=detailed"
 Stocks.API/
 ├── Controllers/         # API controllers
 │   ├── V1/             # Version 1 API endpoints
+│   │   ├── AccountController.cs
 │   │   ├── CommentController.cs
 │   │   └── StockController.cs
 ├── Data/               # Data access layer
 │   ├── ApplicationDBContext.cs
 │   └── Migrations/     # EF Core migrations
 ├── Dtos/               # Data Transfer Objects
+│   ├── Account/        # Account DTOs
+│   │   ├── LoginDto.cs
+│   │   ├── RegisterDto.cs
+│   │   └── NewUserDto.cs
 │   ├── Comment/        # Comment DTOs
 │   └── Stock/          # Stock DTOs
 ├── Helpers/            # Helper classes
 │   └── QueryObject.cs  # Query parameters for filtering/sorting
 ├── Interfaces/         # Repository interfaces
 │   ├── ICommentRepository.cs
+│   ├── ITokenService.cs
 │   └── IStockRepository.cs
 ├── Mappers/            # Object mappers
-│   ├── CommentMappers.cs
-│   └── StockMappers.cs
+│   ├── CommentMapper.cs
+│   └── StockMapper.cs
 ├── Models/             # Domain models
+│   ├── AppUser.cs
 │   ├── Comment.cs
 │   └── Stock.cs
-└── Repository/         # Repository implementations
-    ├── CommentRepository.cs
-    └── StockRepository.cs
+├── Repository/         # Repository implementations
+│   ├── CommentRepository.cs
+│   └── StockRepository.cs
+└── Services/           # Service implementations
+    └── TokenService.cs
 ```
 
-- `/Controllers`: API endpoints for stocks and comments
+- `/Controllers`: API endpoints for stocks, comments, and account management
 - `/Models`: Entity models for database
 - `/Data`: DbContext and database configuration
 - `/Repository`: Data access layer
-- `/Interfaces`: Service interfaces
+- `/Interfaces`: Repository and service interfaces
 - `/Dtos`: Data transfer objects
 - `/Mappers`: Object mapping extensions
 - `/Helpers`: Helper classes
+- `/Services`: Service implementations including token generation
 
 ## Contributing
 
