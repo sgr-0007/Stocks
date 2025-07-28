@@ -5,6 +5,7 @@ using Stocks.API.Helpers;
 using Stocks.API.Interfaces;
 using Stocks.API.Mappers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Stocks.API.Controllers.V1
 {
@@ -17,6 +18,7 @@ namespace Stocks.API.Controllers.V1
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
             var Stocks = await _stockRepo.GetAllAsync(query);
